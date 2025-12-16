@@ -1,0 +1,17 @@
+services:
+    directavatars.directavatars.listener:
+        class: directavatars\directavatars\event\main_listener
+        arguments:
+            - '%core.root_path%'
+            - '%core.php_ext%'
+            - '@config'
+        tags:
+            - { name: event.subscriber }
+
+    directavatars.directavatars.avatar_driver:
+        class: directavatars\directavatars\avatar\driver\direct
+        parent: avatar.driver.upload
+        calls:
+            - [set_name, [directavatars.directavatars.avatar_driver]]
+        tags:
+            - { name: avatar.driver }
